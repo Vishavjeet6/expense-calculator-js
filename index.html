@@ -18,34 +18,72 @@
 </head>
 <body>
     <h1 id="headingTotal"></h1>
-    <input id="inputAmount" type="text"></input>
+    <input id="inputAmount" type="text">
+    <input id="inputDesc" type="text">
     <button id="btnAddExpense">+</button>
+    <div id="expenseTable"></div>
     
     <script>
-
+        // references
         const headingEl = document.querySelector("#headingTotal");
+        const inputDesc = document.querySelector("#inputDesc");
+        const inputElement = document.querySelector("#inputAmount");
+        const expenseTableEl = document.querySelector("#expenseTable");
+
         let totalExpense = 0;
         headingEl.textContent = totalExpense;
 
+        const allExpenses = [];
+
         function addExpenseToTotal(){
-            const inputElement = document.querySelector("#inputAmount");
+
+            const expenseItem = {};
+
             const textAmount = inputElement.value;
             // console.log({ textAmount });
+
+            const textDesc = inputDesc.value;
+            // console.log({ textDesc, textAmount })
+
+            expenseItem.desc = textDesc;
+            expenseItem.amount = textAmount;
+            // console.log({ expenseItem });
+            allExpenses.push(expenseItem);
+
+            // console.clear();
+            // console.table(allExpenses);
+            
+
+            // console.log(expenseItem);
 
             const expense = parseInt(textAmount, 10);
             // console.log({ expense });
 
             totalExpense = totalExpense + expense;
             // console.log({ totalExpense });
-            headingEl.textContent = totalExpense;
+            
+            const someText = `Total: ${totalExpense}`
+
+            headingEl.textContent = someText;
+
+            const allExpenseHTML = allExpenses.map(expense => { 
+                return `<div> ${expense.amount}:: ${expense.desc} </div>`})
+
+            const joinedAllExpenseHTML = allExpenseHTML.join("");   
+            console.log(joinedAllExpenseHTML);
+
+            expenseTableEl.innerHTML = joinedAllExpenseHTML;
         }
         const element = document.querySelector("#btnAddExpense");
         // console.log(element); 
         // double slash by ctrl+/
         // alt + tab = swap windows
         // ctrl+` = editor
+        // ctrl+d to select multiple values
         element.addEventListener("click", addExpenseToTotal, false);
-            
+
+           
+
     </script>
 </body>
 </html>
